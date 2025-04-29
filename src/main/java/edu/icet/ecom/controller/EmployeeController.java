@@ -33,6 +33,11 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable Integer id){
         service.deleteEmployee(id);
     }
+
+    @PutMapping("/update-employee")
+    public void updateEmployee(@RequestBody Employee employee){
+        service.updateEmployee(employee);
+    }
 }
 
 

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +41,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(Integer id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Employee with ID " + id + " does not exist");
+        }
         repository.deleteById(id);
     }
+
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        EmployeeEntity existingEmployee = repository.findById(employee.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Employee with ID " + employee.getId() + " does not exist"));
+
+        if (repository.findByEmail(employee.getEmail()).isPresent() &&
+                !existingEmployee.getEmail().equals(employee.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+
+        EmployeeEntity updatedEmployee = mapper.map(employee, EmployeeEntity.class);
+        updatedEmployee.setCreatedAt(existingEmployee.getCreatedAt());
+        updatedEmployee.setUpdatedAt(LocalDateTime.now());
+        repository.save(updatedEmployee);
+    }
+
 
 
 }
