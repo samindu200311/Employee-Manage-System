@@ -64,6 +64,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         repository.save(updatedEmployee);
     }
 
+    @Override
+    public Employee searchById(Integer id) {
+        EmployeeEntity employeeEntity = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Employee with ID " + id + " does not exist"));
+        return mapper.map(employeeEntity, Employee.class);
+    }
+
 
 
 }

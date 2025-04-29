@@ -38,6 +38,11 @@ public class EmployeeController {
     public void updateEmployee(@RequestBody Employee employee){
         service.updateEmployee(employee);
     }
+
+    @GetMapping("/search-by-id/{id}")
+    public Employee searchById(@PathVariable Integer id){
+        return service.searchById(id);
+    }
 }
 
 
