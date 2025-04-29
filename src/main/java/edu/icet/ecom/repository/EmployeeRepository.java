@@ -1,0 +1,11 @@
+package edu.icet.ecom.repository;
+
+import edu.icet.ecom.model.EmployeeEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Integer> {
+    Optional<EmployeeEntity> findByEmail(String email);
+
+}
