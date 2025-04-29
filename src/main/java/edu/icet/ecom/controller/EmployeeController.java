@@ -28,6 +28,11 @@ public class EmployeeController {
     public List<Employee> getAll(){
         return service.getAll();
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteEmployee(@PathVariable Integer id){
+        service.deleteEmployee(id);
+    }
 }
 
 
